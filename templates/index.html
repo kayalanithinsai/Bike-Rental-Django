@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Re-No</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Bluesky template project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
+<link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css'%}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+</head>
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+	<header class="header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col">
+					<div class="header_content d-flex flex-row align-items-center justify-content-start">
+						<div class="logo">
+							<a href="/">Re-No</a>
+						</div>
+						<nav class="main_nav">
+							<ul>
+								<li class="active"><a href="/">Home</a></li>
+								<li><a href="/About">About us</a></li>
+								<li><a href="/bikes">bikes</a></li>
+                                {% if user.is_authenticated %}
+                                <li><strong>hello , {{ user.first_name }} !</strong></li>
+                                     <li><a href="/cart">cart</a></li>
+                                    <li><a href="/logout">logout</a></li>
+                                {% else %}
+                                <li><a href="/login">login</a></li>
+                                <li><a href="/register">register</a></li>
+                                {% endif %}
+							</ul>
+						</nav>
+                        <div class="phone_num ml-auto">
+							<div class="phone_num_inner">
+								<img src="{%  static 'images/phone.png' %}" alt=""><span> 7382586666 </span>
+							</div>
+						</div>
+						<div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+    <!-- Home search -->
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-4">
+            <br>
+            <form class="login100-form validate-form" method="POST" action="/bikes/">
+                    {% csrf_token %}
+                <br><br><br><br>
+					<span class="login100-form-title">
+                        Re-No
+					</span>
+
+					<div class="wrap-input100">
+                        <select class="input100" name="city">
+                            <option disabled selected>select city</option>
+                            {% for city in cities %}
+                                <option value="{{ city.branch_city }}">{{ city.branch_city }}</option>
+                            {% endfor %}
+                        </select>
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="wrap-input100">
+                        <select class="input100" name="bike_model">
+                            <option disabled selected>choose model</option>
+                            {% for model in models %}
+                                <option value="{{ model.bike_model }}">{{ model.bike_model }}</option>
+                            {% endfor %}
+                        </select>
+						<span class="focus-input100"></span>
+					</div>
+
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+                            Ride
+						</button>
+					</div>
+            </form>
+        </div>
+        <div class="col">
+            <br><br><br><br>
+            <img src="{% static 'png-hd-bike-ktm-rc-390-motorcycle-bike-png-image-1592.png' %}" width="650" height="550" align="right">
+        </div>
+    </div>
+
+    </div>
+	<!-- bikes list -->
+
+	<div class="recent">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title">All bike models</div>
+					<div class="section_subtitle">Search your dream bike</div>
+				</div>
+			</div>
+			<div class="row recent_row">
+				<div class="col">
+					<div class="recent_slider_container">
+						<div class="owl-carousel owl-theme recent_slider">
+
+							<!-- Slide -->
+                            {% for bike in bikes %}
+							<div class="owl-item">
+								<div class="recent_item">
+									<div class="recent_item_inner">
+										<div class="recent_item_image">
+											<img src="{{ bike.image.url }}" alt="">
+										</div>
+										<div class="recent_item_body text-center">
+											<div class="recent_item_location">{{ bike.bike_company }}</div>
+											<div class="recent_item_title"><a href="bike.html">{{ bike.bike_model }}</a></div>
+											<div class="recent_item_price">₹ {{ bike.bike_cost }}</div>
+										</div>
+										<div class="recent_item_footer d-flex flex-row align-items-center justify-content-start">
+											<div><div class="recent_icon"><img src="{% static 'images/icon_1.png' %}" alt=""></div><span>{{ bike.bike_cc }} CC</span></div>
+											<div><div class="recent_icon"><img src="{% static 'images/icon_2.png' %}" alt=""></div><span>{{ bike.bike_millage }} Kmpl</span></div>
+											<div><div class="recent_icon"><img src="{% static 'images/icon_3.png' %}" alt=""></div><span>{{ bike.bike_colour }}</span></div>
+										</div>
+									</div>
+								</div>
+							</div>
+                            {% endfor %}
+						</div>
+
+						<div class="recent_slider_nav_container d-flex flex-row align-items-start justify-content-start">
+							<div class="recent_slider_nav recent_slider_prev"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+							<div class="recent_slider_nav recent_slider_next"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Cities -->
+
+	<div class="cities">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title">Find Bikes in these cities</div>
+					<div class="section_subtitle">Search your dream bike</div>
+				</div>
+			</div>
+		</div>
+		<div class="cities_container d-flex flex-row flex-wrap align-items-start justify-content-between">
+
+			<!-- City with database interaction -->
+            {% for branch in branches %}
+			<div class="city">
+				<img src="{{ branch.image.url }}" alt="img">
+				<div class="city_overlay">
+					<a href="#" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_title">{{ branch.branch_city }}</div>
+						<div class="city_subtitle">{{ branch.branch_name }}</div>
+					</a>	
+				</div>
+			</div>
+            {% endfor %}
+            </div>
+		</div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

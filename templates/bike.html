@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Book</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/property.css' %}">
+</head>
+<body>
+<div class="super_container">
+	<!-- Header -->
+
+	<header class="header">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="header_content d-flex flex-row align-items-center justify-content-start">
+						<div class="logo">
+							Re-No
+						</div>
+						<nav class="main_nav">
+							<ul>
+								<li class="active"><a href="/">Home</a></li>
+								<li><a href="/About">About us</a></li>
+								<li><a href="/bikes">bikes</a></li>
+                                {% if user.is_authenticated %}
+                                <li><strong>hello , {{ user.first_name }} !</strong></li>
+                                     <li><a href="/cart">cart</a></li>
+                                    <li><a href="/logout">logout</a></li>
+                                {% else %}
+                                <li><a href="/login">login</a></li>
+                                <li><a href="/register">register</a></li>
+                                {% endif %}
+							</ul>
+						</nav>
+						<div class="phone_num ml-auto">
+							<div class="phone_num_inner">
+								<img src="{% static 'images/phone.png' %}" alt=""><span>7382586666</span>
+							</div>
+						</div>
+						<div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Intro -->
+<br><br><br><br>
+	<div class="intro">
+		<div class="container">
+			<div class="row">
+				<div class="col-9">
+					<div class="intro_content d-flex flex-lg-row flex-column align-items-start justify-content-start">
+						<div class="intro_title_container">
+
+							<div class="intro_title">{{ bike.bike_company }} {{ bike.bike_model }}</div>
+							<div class="intro_tags">
+								<ul>
+									<li><a href="#">{{ bike.branch_id.branch_city }}</a></li>
+									<li><a href="#">{{ bike.branch_id.branch_name }}</a></li>
+								</ul>
+							</div>
+						</div>
+                        {% if user.is_authenticated and bike.bike_availability == 1%}
+						<div class="intro_price_container ml-lg-auto d-flex flex-column align-items-start justify-content-center">
+							<div class="intro_price"><a href="/status/{{ bike.bike_id }}">booknow</a></div>
+						</div>
+                         {% else %}
+                            {% if bike.bike_availability == 1 %}
+                            <div class="intro_price_container ml-lg-auto d-flex flex-column align-items-start justify-content-center">
+							<div class="intro_price"><a href="/login">book now </a></div>
+						</div>
+                                {% endif %}
+                        {% endif %}
+                        {% if bike.bike_availability == 0 %}
+                        <div class="intro_price_container ml-lg-auto d-flex flex-column align-items-start justify-content-center">
+							<div class="intro_price"><a href="/return_status/{{ bike.bike_id }}/{{ order.order_id }}">return now</a> </div>
+						</div>
+                        {% endif %}
+
+					</div>
+
+				</div>
+            <div class="col-3">
+            {% if message is not None %}
+                <br><br><br><br><br><br>
+                        <h3> {{ message }}</h3>
+            {% endif %}
+            </div>
+			</div>
+            <img src="{{ bike.image.url }}" alt="image">
+		</div>
+		
+		</div>
+	</div>
+
+	<!-- Property -->
+
+	<div class="property">
+		<div class="container">
+			<div class="row">
+				<!-- Property Content -->
+				<div class="col-lg-7 offset-lg-1">
+					<div class="property_content">
+						<div class="property_icons">
+							<div class="property_title">Features</div>
+							<div class="property_rooms d-flex flex-sm-row flex-column align-items-start justify-content-start">
+
+								<!-- Property Room Item -->
+								<div class="property_room">
+									<div class="property_room_title">millage</div>
+									<div class="property_room_content d-flex flex-row align-items-center justify-content-start">
+										<div class="room_icon"><img src="{% static 'images/room_1.png' %}" alt=""></div>
+										<div class="room_num">{{ bike.bike_millage }}</div>
+									</div>
+								</div>
+
+								<!-- Property Room Item -->
+								<div class="property_room">
+									<div class="property_room_title">colour</div>
+									<div class="property_room_content d-flex flex-row align-items-center justify-content-start">
+										<div class="room_icon"><img src="{% static 'images/room_2.png' %}" alt=""></div>
+										<div class="room_num">{{ bike.bike_colour }}</div>
+									</div>
+								</div>
+
+								<!-- Property Room Item -->
+								<div class="property_room">
+									<div class="property_room_title">cc</div>
+									<div class="property_room_content d-flex flex-row align-items-center justify-content-start">
+										<div class="room_icon"><img src="{% static 'images/room_3.png' %}" alt=""></div>
+										<div class="room_num">{{ bike.bike_cc }} </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

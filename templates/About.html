@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Re-No</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Bluesky template project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css'%}">
+</head>
+<body>
+<font color="black">
+	<!-- Header -->
+	<header class="header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col">
+					<div class="header_content d-flex flex-row align-items-center justify-content-start">
+						<div class="logo">
+							<a href="/">Re-No</a>
+						</div>
+						<nav class="main_nav">
+							<ul>
+								<li class="active"><a href="/">Home</a></li>
+								<li><a href="/About">About us</a></li>
+								<li><a href="/bikes">bikes</a></li>
+                                {% if user.is_authenticated %}
+                                <li><strong>hello , {{ user.first_name }} !</strong></li>
+                                    <li><a href="/logout">logout</a></li>
+                                {% else %}
+                                <li><a href="/login">login</a></li>
+                                <li><a href="/register">register</a></li>
+                                {% endif %}
+							</ul>
+						</nav>
+                        <div class="phone_num ml-auto">
+							<div class="phone_num_inner">
+								<img src="{%  static 'images/phone.png' %}" alt=""><span> 7382586666 </span>
+							</div>
+						</div>
+						<div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+<br><br><br><br><br>
+
+<h1><center>This is reno.<center></h1>
+
+
+<h3><center>devoloped by<center></h3><br>
+<div class="row">
+<div class="col-4">
+    <h4 > Nithin sai kayala</h4>
+</div>
+<div class="col-4">
+    <h4>
+        penubadi reddy sunil
+    </h4>
+</div>
+<div class="col-4">
+    <h4>
+        madhulika damor
+    </h4>
+</div>
+    </div>
+</font>
+</body>
+</html>
+
