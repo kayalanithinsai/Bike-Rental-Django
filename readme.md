@@ -15,7 +15,7 @@ install the dependencies
 ## step-3
 
 make migrations from the database with the following commands
-'''console
+'''bash
 user:~$ python3 manage.py makemigrations
 user:~$ python3 manage.py migrate
 '''
@@ -25,7 +25,7 @@ user:~$ python3 manage.py migrate
 run the website
 
 starting the server with default port.
-'''console
+'''bash
 user:~$ python3 manage.py runserver
 '''
 
